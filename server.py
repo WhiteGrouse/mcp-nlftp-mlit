@@ -1,8 +1,8 @@
 from mcp.server.fastmcp import FastMCP
-from bs4 import BeautifulSoup, Tag
-from urllib.parse import urljoin
+from aiohttp import ClientSession
 from pathlib import Path
 import json
+import shutil
 import os
 import sys
 sys.dont_write_bytecode = True
@@ -38,8 +38,8 @@ def get_available_files(id: str) -> str:
     return "[ERROR] 指定されたデータセットが見つかりません"
   return path.read_text("utf-8")
 
-@mcp.tool(description="データセットIDとファイル名からダウンロード用URLを取得")
-def get_download_url(id: str, filename: str) -> str:
+@mcp.tool(description="ファイルをダウンロードしてさらに解凍する。ユーザによる出力先フォルダの指定が必須。")
+async def download(id: str, filename: str, output_dir: str) -> str:
   if not cache_dir.exists():
     return "[ERROR] キャッシュが見つからないため取得できません"
   
@@ -50,7 +50,21 @@ def get_download_url(id: str, filename: str) -> str:
   url = next((file["url"] for file in files if file["filename"] == filename), None)
   if url is None:
     return "[ERROR] 指定されたファイルが見つかりません"
-  return url
+  
+  output_dir: Path = Path(output_dir)
+  output_dir.mkdir(exist_ok=True)
+  zipfile = output_dir / filename
+  extract_dir = zipfile.with_suffix("")
+  async with ClientSession() as session:
+    with zipfile.open("wb") as f:
+      async with session.get(url) as res:
+        while True:
+          chunk = await res.content.read(128)
+          if not chunk:
+            break
+          f.write(chunk)
+  shutil.unpack_archive(zipfile, extract_dir)
+  return "OK"
 
 if __name__ == "__main__":
   mcp.run(transport="stdio")
