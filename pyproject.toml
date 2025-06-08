@@ -1,0 +1,13 @@
+[project]
+name = "mcp-nlftp-mlit"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "aiohttp[speedups]>=3.12.11",
+    "anthropic>=0.52.2",
+    "beautifulsoup4>=4.13.4",
+    "mcp[cli]>=1.9.3",
+    "tqdm>=4.67.1",
+]
