@@ -28,3 +28,8 @@ update_cache.py冒頭のANTHROPIC_API_KEYにAPI Keyを記入してください�
 # キャッシュを生成、更新
 uv run update_cache.py
 ```
+
+## Example
+```
+国土数値情報から地価をダウンロードしてduckdbを使ってparquetにしたい。 ファイルはC:\Users\User\Desktop\地価に保存して。わからないことがあれば質問して。
+```
