@@ -7,7 +7,7 @@
 スクレイピングの観点、LLMの入出力トークンの節約から事前にキャッシュを生成します。
 その過程でClaudeを使った要約を行うためAnthropicのAPI Keyを用意してください。
 
-サンプルのキャッシュを用意しました。cache.zipを解凍して使用してください。
+サンプルのキャッシュを用意しました。cache.zipを解凍するだけで使い始めることができます。
 
 ## API
 - **list_data** ダウンロード可能なデータの一覧を取得
@@ -33,6 +33,25 @@ update_cache.py冒頭のANTHROPIC_API_KEYにAPI Keyを記入してください�
 ```
 # キャッシュを生成、更新
 uv run update_cache.py
+```
+
+## Claude Desktop
+claude_desktop_config.jsonに設定を追加してください。
+/path/to/mcp-nlftp-mlitは必要に合わせて変更してください。
+```json
+{
+  "mcpServers": {
+    "国土数値情報": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/path/to/mcp-nlftp-mlit",
+        "run",
+        "server.py"
+      ]
+    }
+  }
+}
 ```
 
 ## Example
