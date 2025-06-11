@@ -8,10 +8,14 @@
 その過程でClaudeを使った要約を行うためAnthropicのAPI Keyを用意してください。
 
 ## API
-- **list_datasets** データセットのリストを取得
-- **get_details** 指定したデータセットの詳細情報を取得
-- **get_available_files** 指定したデータセットのダウンロード可能なファイルのリストを取得
-- **download** 指定したファイルを指定したフォルダにダウンロード&解凍
+- **list_data** ダウンロード可能なデータの一覧を取得
+- **get_details** 指定したデータの詳細情報を取得
+- **get_available_files** 指定したデータにおけるダウンロード可能なファイルの一覧を取得
+- **download** 単一のzipファイルをダウンロード&解凍
+- **download_all** 複数のzipファイルをダウンロード&解凍
+- **convert_shpfile_sjis_to_utf8** Shift-JIS(CP932)のshpファイルをUTF-8に変換、上書きします
+- **convert_shpfile_all_sjis_to_utf8** convert_shpfile_sjis_to_utf8の複数ファイル版
+- **generate_merge_sql** 同様のデータ構造を持つシェープファイルやGeoJSONファイルを1つに結合するDuckDBのSQLを生成します
 
 ## Setup
 ```
@@ -30,6 +34,9 @@ uv run update_cache.py
 ```
 
 ## Example
+プロンプト例
 ```
 国土数値情報から地価をダウンロードしてduckdbを使ってparquetにしたい。 ファイルはC:\Users\User\Desktop\地価に保存して。わからないことがあれば質問して。
 ```
+会話例  
+https://claude.ai/share/6ad76f6c-4b06-4a67-9e9e-37227f3980f9
